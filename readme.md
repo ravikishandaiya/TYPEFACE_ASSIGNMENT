@@ -76,22 +76,30 @@ The Dropbox-like Service is a simplified file storage application that allows us
 
 
 **Clone the Repository**
+`git clone https://github.com/ravikishandaiya/TYPEFACE_ASSIGNMENT.git`
 
 ### Using Docker
-Navigate to Project Directory
+Navigate to Project Directory and run
+`docker-compose up --build`
+
+And that's all.
+
+### Without Docker
+#### 1. Navigate to Project Directory
+`cd app`
+
+#### 2. Install Dependencies
+`pip install -r requirements.txt`
+
+#### 3. Run Migrations
+`python manage.py makemigrations`
+`python manage.py migrate`
+
+#### 4. Start the Development Server
+`python manage.py runserver`
 
 
+And Thats all.
 
-Navigate to Project Directory:
-cd dropbox-equivalent-service
-
-	Install Dependencies:
-    pip install -r requirements.txt
-
-    Run Migrations:
-    python manage.py makemigrations
-    python manage.py migrate
-
-    Start the Development Server:
-    python manage.py runserver
-
+## Contact
+For further assistance, please contact [ravikishandaiya@gmail.com](mailto:ravikishandaiya@gmail.com).
