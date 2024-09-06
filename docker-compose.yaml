@@ -1,0 +1,13 @@
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh entrypoint.sh
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+   
+
+
