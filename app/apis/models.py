@@ -8,6 +8,7 @@ class Files(models.Model):
     file_size = models.IntegerField()
     file_type = models.CharField(max_length=50)
     file_path = models.FileField(upload_to='uploads/')
+    directory = models.CharField(max_length=1000, default='/')
 
     def __str__(self):
         return self.file_name

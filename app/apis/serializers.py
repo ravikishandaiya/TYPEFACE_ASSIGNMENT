@@ -4,4 +4,4 @@ from .models import Files
 class FilesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Files
-        fields = ['id', 'file_name', 'created_at', 'file_size', 'file_type']
+        fields = ['id', 'file_name', 'created_at', 'file_size', 'file_type', 'directory']

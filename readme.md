@@ -26,6 +26,8 @@ The Dropbox-like Service is a simplified file storage application that allows us
 - **Description**: Upload a file to the server.
 - **Request Body**:
   - File binary data (multipart/form-data)
+- **Request Params**:
+  - directory (optional), by default '/' is the parent directory, we can specify, different directory for the files
 - **Response**:
   - `201 Created` on success with a JSON response containing the unique file identifier.
   - `400 Bad Request` if the file is missing or invalid.
@@ -62,8 +64,10 @@ The Dropbox-like Service is a simplified file storage application that allows us
 
 - **Endpoint**: `GET /files`
 - **Description**: List all files and their metadata.
+- **Request Params**:
+  - directory (optionla), by default '/' is the parent directory, we can request files and sub-directory in a specific directory.
 - **Response**:
-  - `200 OK` with a JSON list of file metadata objects.
+  - `200 OK` with a JSON list of sub-directories and files metadata objects.
 
 ## Error Handling
 

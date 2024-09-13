@@ -17,14 +17,17 @@ class FileViewSet(viewsets.ViewSet):
         file_name = file.name
         file_size = file.size
         file_type = file.content_type
+        dir = request.GET.get('directory', '/')
+
+        #print("Directory",dir)
 
         file_path = default_storage.save(file_name, file)
 
         file_instance = Files.objects.create(
-            file_name=file_name, file_size=file_size, file_type=file_type, file_path=file_path
+            file_name=file_name, file_size=file_size, file_type=file_type, file_path=file_path, directory=dir
         )
 
-        return Response({"file_id": file_instance.id, "file_name":file_name, "file_size": str(file_size//1024)+" KB"}, status=status.HTTP_201_CREATED)
+        return Response({"file_id": file_instance.id, "file_name":file_name, "file_size": str(file_size//1024)+" KB", "directory": file_instance.directory}, status=status.HTTP_201_CREATED)
 
 
     def retrieve(self, request, pk=None):
@@ -34,6 +37,7 @@ class FileViewSet(viewsets.ViewSet):
 
             response = HttpResponse(file_data, content_type=file_instance.file_type, status=status.HTTP_200_OK)
             response['Content-Disposition'] = f'attachment; filename="{file_instance.file_name}"'
+            response['directory'] = f'{file_instance.directory}'
 
             return response
         
@@ -79,11 +83,25 @@ class FileViewSet(viewsets.ViewSet):
 
 
     def list_files(self, request):
-        files = Files.objects.all()
-        serializer = FilesSerializer(files, many=True)
+        # files = Files.objects.all()
+        # serializer = FilesSerializer(files, many=True)
 
-        return Response(serializer.data)
-    
+        dir = request.GET.get('directory', '')
+        sub_dirs = Files.objects.filter(directory__startswith=dir).values_list('directory', flat=True).distinct()
+        #print("sub_dirs", sub_dirs)
+
+        dir = '/' if dir == '' else dir
+        files = Files.objects.filter(directory=dir) 
+        files_serializer = FilesSerializer(files, many=True)
+        # print(files_serializer.data)
+
+        response = {
+            "sub-directories": list(sub_dirs),
+            "files": files_serializer.data
+        }
+
+        return Response(response)
+
 
 
 
